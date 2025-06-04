@@ -3,6 +3,7 @@ package com.propertyservice.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -58,5 +59,5 @@ public class Property {
 	
 	@OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
-	private List<Rooms> rooms= new ArrayList<>();
+	private List<Rooms> rooms = new ArrayList<>();
 }

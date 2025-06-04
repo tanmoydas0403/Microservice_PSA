@@ -1,13 +1,11 @@
 package com.propertyservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,6 +14,8 @@ import com.propertyservice.dto.APIResponse;
 import com.propertyservice.dto.PropertyDto;
 import com.propertyservice.entity.Property;
 import com.propertyservice.service.PropertyService;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/property")
@@ -79,6 +79,15 @@ public class PropertyController {
 		response.setData(propertyDto);
 
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/search-property")
+	public APIResponse searchProperty(
+			@RequestParam String name,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date
+			){
+		APIResponse response = propertyService.searchProperty(name, date);
+		return response;
 	}
 
 	

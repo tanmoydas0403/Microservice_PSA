@@ -1,6 +1,7 @@
 package com.propertyservice.service;
 
 
+import com.propertyservice.dto.APIResponse;
 import com.propertyservice.dto.EmailRequest;
 import com.propertyservice.dto.RoomsDto;
 import com.propertyservice.entity.*;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.propertyservice.dto.PropertyDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -142,5 +144,15 @@ public PropertyDto addProperty(PropertyDto dto, MultipartFile[] files) {
 	));
 
 	return responseDto;
+}
+
+public APIResponse searchProperty(String city, LocalDate date){
+	List<Property> properties =propertyRepository.searchProperty(city,date);
+	APIResponse<List<Property>> response = new APIResponse<>();
+
+	response.setMessage("Search Result");
+	response.setStatus(200);
+	response.setData(properties);
+	return response;
 }
 }
